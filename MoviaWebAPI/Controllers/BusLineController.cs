@@ -11,7 +11,7 @@ namespace MoviaWebAPI.Controllers
     [ApiController]
     public class BusLineController : ControllerBase
     {
-        public BusLineManager _busLineManager = new();
+        private BusLineManager _busLineManager = new();
 
         // GET api/<BusLineController>/
         
@@ -22,7 +22,16 @@ namespace MoviaWebAPI.Controllers
             {
                 return BadRequest();
             }
-            return Ok(_busLineManager.Get(line, amount));
+
+            try
+            {
+                return Ok(_busLineManager.Get(line, amount));
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
         }
         [HttpGet("between/{from}/{to}")]
         public List<string> Get(DateTime from, DateTime to)
@@ -34,6 +43,7 @@ namespace MoviaWebAPI.Controllers
         [HttpPost]
         public BusLine Post([FromBody] BusLine value)
         {
+            Console.WriteLine(value.Message);
             return _busLineManager.Post(value);
         }
     }
