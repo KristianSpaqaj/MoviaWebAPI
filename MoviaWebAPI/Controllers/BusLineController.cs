@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Mvc;
 using MoviaWebAPI.Manager;
 using MoviaWebAPI.Models;
 
@@ -12,11 +13,16 @@ namespace MoviaWebAPI.Controllers
     {
         public BusLineManager _busLineManager = new();
 
-        // GET api/<BusLineController>/5
+        // GET api/<BusLineController>/
+        
         [HttpGet("line/{line}/{amount}")]
-        public List<string> Get(string line, int amount)
+        public IActionResult Get(string line, int amount)
         {
-            return _busLineManager.Get(line,amount);
+            if (amount < 1)
+            {
+                return BadRequest();
+            }
+            return Ok(_busLineManager.Get(line, amount));
         }
         [HttpGet("between/{from}/{to}")]
         public List<string> Get(DateTime from, DateTime to)
