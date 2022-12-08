@@ -11,12 +11,6 @@ namespace MoviaWebAPI.Controllers
     public class BusLineController : ControllerBase
     {
         public BusLineManager _busLineManager = new();
-        // GET: api/<BusLineController>
-        [HttpGet]
-        public IEnumerable<string> Get()
-        {
-            return new string[] { "value1", "value2" };
-        }
 
         // GET api/<BusLineController>/5
         [HttpGet("line/{line}/{amount}")]
@@ -34,20 +28,7 @@ namespace MoviaWebAPI.Controllers
         [HttpPost]
         public BusLine Post([FromBody] BusLine value)
         {
-            Console.WriteLine(value.Message);
             return _busLineManager.Post(value);
-        }
-
-        // PUT api/<BusLineController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE api/<BusLineController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
         }
     }
 }

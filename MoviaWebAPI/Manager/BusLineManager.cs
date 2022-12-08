@@ -6,7 +6,7 @@ namespace MoviaWebAPI.Manager
 {
     public class BusLineManager
     {
-        public static List<BusLine> BuslinesList = new List<BusLine>()
+        public static List<BusLine> BusLines = new List<BusLine>()
         {
             new BusLine("1A",DateTime.Now,"This is a mockup message"),
             new BusLine("1A",DateTime.Now.AddDays(1),"mockup 2"),
@@ -20,20 +20,29 @@ namespace MoviaWebAPI.Manager
              * Return beskeder
              */
             List<string> messages = new List<string>();
-            messages = (List<string>)BuslinesList.Where(x => x.Line == line).Take(amount).OrderByDescending(y=> y.Time).Select(f=>f.Message).ToList();
+            messages = (List<string>)BusLines
+                .Where(x => x.Line == line)
+                .Take(amount)
+                .OrderByDescending(y=> y.Time)
+                .Select(f=>f.Message)
+                .ToList();
 
             return messages;
         }
         public List<string> Get(DateTime from, DateTime to)
         {
             List<string> messages = new List<string>();
-            messages = BuslinesList.Where(x=> x.Time >= from && x.Time <= to).OrderByDescending(x => x.Time).Select(x=> x.Message).ToList();
+            messages = BusLines
+                .Where(x=> x.Time >= from && x.Time <= to)
+                .OrderByDescending(x => x.Time)
+                .Select(x=> x.Message)
+                .ToList();
             return messages;
         }
 
         public BusLine Post(BusLine value)
         {
-            BuslinesList.Add(value);
+            BusLines.Add(value);
             return value;
         }
     }
